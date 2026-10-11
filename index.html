@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel = "stylesheet" href = "styling.css">
+    </head>
+    <body>
+        <script src = "nonogramV2.js" defer></script>
+        <table id = "grid"></table>
+            <script>
+                const grid = document.getElementById("grid");
+                for(let i = 0; i < 11; i++){
+                    const row = document.createElement("tr");
+                    for(let j = 0; j < 11; j++){
+                        if(((i != 0) && (j != 0))){
+                            const btn = document.createElement("button");
+                            const cell = document.createElement("td");
+                            btn.style.backgroundColor = "white"
+                            btn.id = (`button-${i-1}-${j-1}`);
+                            btn.textContent = "";
+                            btn.addEventListener("click", () => changeColor(btn.id))
+                            btn.addEventListener("contextmenu", (event) => {
+                                event.preventDefault();
+                                markedRed(btn.id);
+                            })
+                            cell.appendChild(btn);
+                            row.appendChild(cell);
+                        }
+                        else{
+                            const cell = document.createElement("th");
+                            cell.id = (`label-${i}-${j}`);
+                            // cell.textContent = `${j},${i}`
+                            if(j===0){
+                                cell.classList.add("col0");
+                            }
+                            if(i===0){
+                                cell.classList.add("row0");
+                            }
+                            row.appendChild(cell);
+                        }
+                    }
+                    grid.appendChild(row);
+                }
+            </script>
+            <p><b>Lives: <span id="livesCount"></span></b></p>
+            <p><span id = "winCheck"></span></p>
+            <p><b>Level Select:</b></p>
+            <div id = "levelSelect">
+                <script>
+                    for(let i = 0; i < 5; i++){
+                        const levelSelect = document.getElementById("levelSelect");
+                        const levels = document.createElement("button");
+                        levels.id = `level-${i}`;
+                        levels.textContent = `${i+1}`;
+                        levels.addEventListener("click", () => changeLevel(levels.textContent));
+                        levelSelect.appendChild(levels);
+                    }
+                </script>
+            </div>
+    </body>
+</html>
